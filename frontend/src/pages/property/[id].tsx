@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
-import { LuBellRing } from 'react-icons/lu';
-import { FaRegHeart } from 'react-icons/fa';
+// components
+import Iconify from 'src/components/iconify';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -265,8 +265,8 @@ export default function PropertyDetailPage() {
                   breadcrumbItem={property.title}
                 />
                 <Stack direction="row" spacing={2} alignItems="center">
-                  <FaRegHeart size={18} />
-                  <LuBellRing size={18} />
+                  <Iconify icon="eva:heart-outline" width={18} />
+                  <Iconify icon="eva:bell-outline" width={18} />
                   <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
                     {t(`buy`)}
                   </Typography>
