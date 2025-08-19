@@ -20,6 +20,26 @@ export default function EstateCard({ height, product }: EstateCardProps) {
   const { t } = useLocales();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Função para extrair informações da descrição quando features não estão disponíveis
+  const extractFromDescription = (description: string) => {
+    if (!description) return { bedrooms: 0, bathrooms: 0, area: 0 };
+    
+    const bedroomsMatch = description.match(/(\d+)\s*quartos?/i);
+    const bathroomsMatch = description.match(/(\d+)\s*suítes?/i) || description.match(/(\d+)\s*banheiros?/i);
+    const areaMatch = description.match(/(\d+)\s*m²/i);
+    
+    return {
+      bedrooms: bedroomsMatch ? parseInt(bedroomsMatch[1]) : 0,
+      bathrooms: bathroomsMatch ? parseInt(bathroomsMatch[1]) : 0,
+      area: areaMatch ? parseInt(areaMatch[1]) : 0,
+    };
+  };
+
+  // Extrair dados da descrição se features não estiver disponível
+  const descriptionData = (!product.features || Object.keys(product.features).length === 0) 
+    ? extractFromDescription(product.description) 
+    : { bedrooms: 0, bathrooms: 0, area: 0 };
+
   const handleCardClick = () => {
     const propertyId = product._id || product.id;
     window.location.href = `/imovel-detalhes?id=${propertyId}`;
@@ -232,12 +252,12 @@ export default function EstateCard({ height, product }: EstateCardProps) {
         <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.bedrooms || product.features?.bedrooms || product.features?.number_of_bedrooms || product.number_of_bedrooms || 0} Dormitórios
+              {product.bedrooms || product.features?.bedrooms || product.features?.number_of_bedrooms || product.number_of_bedrooms || descriptionData.bedrooms || 0} Dormitórios
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.suites || product.bathroom || product.features?.bathroom || product.features?.number_of_bathrooms || product.number_of_suites || 0} Suíte
+              {product.suites || product.bathroom || product.features?.bathroom || product.features?.number_of_bathrooms || product.number_of_suites || descriptionData.bathrooms || 0} Suíte
             </Typography>
           </Stack>
         </Stack>
@@ -245,12 +265,12 @@ export default function EstateCard({ height, product }: EstateCardProps) {
         <Stack direction="row" spacing={2}>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.parking_spaces || product.vacancies || product.features?.vacancies || product.features?.number_of_car_in_garage || product.number_of_parking_spaces || 0} Vagas
+              {product.parking_spaces || product.vacancies || product.features?.vacancies || product.features?.number_of_car_in_garage || product.number_of_parking_spaces || (product.type === 'Apartamento' ? 1 : 0)} Vagas
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.area || product.features?.area || product.total_area || 0}m² (Área útil)
+              {product.area || product.features?.area || product.total_area || descriptionData.area || 0}m² (Área útil)
             </Typography>
           </Stack>
         </Stack>
