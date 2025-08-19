@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { CiCirclePlus } from 'react-icons/ci';
+// components
+import Iconify from 'src/components/iconify';
 // form
 import { useFormContext } from 'react-hook-form';
 // @mui
@@ -157,7 +158,7 @@ export default function FeaturesForm() {
                   <Box>
                     <RoundButton
                       variant="outlined"
-                      startIcon={<CiCirclePlus />}
+                      startIcon={<Iconify icon="eva:plus-circle-outline" />}
                       onClick={() => addFeature(prefix, group.name)}
                     >
                       <span style={{ whiteSpace: 'nowrap' }}>
