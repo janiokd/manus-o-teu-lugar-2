@@ -1,4 +1,5 @@
-import { CiCirclePlus } from 'react-icons/ci';
+// components
+import Iconify from 'src/components/iconify';
 // form
 import { useFormContext } from 'react-hook-form';
 // @mui
@@ -85,7 +86,7 @@ export default function LocationForm() {
           onKeyDown={handleKeyDown}
         />
         <Box>
-          <RoundButton variant="outlined" startIcon={<CiCirclePlus />} onClick={addLocation}>
+          <RoundButton variant="outlined" startIcon={<Iconify icon="eva:plus-circle-outline" />} onClick={addLocation}>
             <span style={{ whiteSpace: 'nowrap' }}>{t(`advertisePage.add_new_proxity`)}</span>
           </RoundButton>
         </Box>
