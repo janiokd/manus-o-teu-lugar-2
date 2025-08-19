@@ -195,7 +195,6 @@ export default function MainForm() {
         <RHFAutocomplete
           name="city"
           label={t(`city`)}
-          placeholder={t(`select`)}
           options={cities
             .filter((city) => city.stateCode === values.state?.value)
             .map((c) => ({ label: c.name, value: c.name, lat: c.latitude, lng: c.longitude }))}
