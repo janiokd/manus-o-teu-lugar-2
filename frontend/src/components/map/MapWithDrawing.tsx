@@ -14,6 +14,9 @@ import { MAP_API, HOST_API } from 'src/config-global';
 import MapIcon from 'src/assets/icons/MapIcon';
 import RoundButton from '../customs/RoundButton';
 
+// Constante para bibliotecas do Google Maps (evita recriar array a cada render)
+const GOOGLE_MAPS_LIBRARIES: ("drawing" | "places" | "geometry")[] = ['drawing', 'places', 'geometry'];
+
 export const center = {
   lat: -19.9167, // Belo Horizonte, Brasil
   lng: -43.9345,
@@ -496,7 +499,7 @@ export default function MapWithDrawing({
 
 
   return (
-    <LoadScript googleMapsApiKey={MAP_API || ''} libraries={['drawing', 'places', 'geometry']}>
+    <LoadScript googleMapsApiKey={MAP_API || ''} libraries={GOOGLE_MAPS_LIBRARIES}>
       <Box
         sx={{
           bgcolor: 'white',

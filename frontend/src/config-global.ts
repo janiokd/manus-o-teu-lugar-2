@@ -6,7 +6,7 @@
 
 export const HOST_API = process.env.HOST_API || '';
 
-export const MAP_API = process.env.MAPBOX_API;
+export const MAP_API = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 // ROOT PATH AFTER LOGIN SUCCESSFUL
 export const PATH_AFTER_LOGIN = '/'; // as '/dashboard/app'
