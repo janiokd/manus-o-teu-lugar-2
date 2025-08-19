@@ -387,6 +387,36 @@ export default function PropertyDetailPage() {
                   </Stack>
                 </>
               )}
+
+              {/* Proximidades */}
+              {property.locations && property.locations.length > 0 && (
+                <>
+                  <Divider />
+                  <Stack direction="column" spacing={1}>
+                    <Typography variant="h4" color="primary">
+                      Proximidades do Imóvel
+                    </Typography>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                      {property.locations.map((location: string, index: number) => (
+                        <Box
+                          key={index}
+                          sx={{
+                            px: 2,
+                            py: 0.5,
+                            backgroundColor: 'secondary.light',
+                            color: 'secondary.contrastText',
+                            borderRadius: 1,
+                            fontSize: '0.875rem',
+                          }}
+                        >
+                          <Iconify icon="eva:pin-fill" width={16} sx={{ mr: 0.5 }} />
+                          {location}
+                        </Box>
+                      ))}
+                    </Box>
+                  </Stack>
+                </>
+              )}
             </Stack>
           </Grid>
 
