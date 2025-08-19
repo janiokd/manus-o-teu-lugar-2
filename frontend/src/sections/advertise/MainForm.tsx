@@ -186,7 +186,7 @@ export default function MainForm() {
             value: state.isoCode,
           }))}
           renderOption={(props, option) => (
-            <MenuItem key={option.value} {...props}>
+            <MenuItem {...props}>
               {option.label}
             </MenuItem>
           )}
@@ -200,7 +200,7 @@ export default function MainForm() {
             .filter((city) => city.stateCode === values.state?.value)
             .map((c) => ({ label: c.name, value: c.name, lat: c.latitude, lng: c.longitude }))}
           renderOption={(props, option) => (
-            <MenuItem key={option.value} {...props}>
+            <MenuItem {...props}>
               {option.label}
             </MenuItem>
           )}
@@ -213,7 +213,7 @@ export default function MainForm() {
           options={neighborhoods}
           freeSolo
           renderOption={(props, option) => (
-            <MenuItem key={option.value} {...props}>
+            <MenuItem {...props}>
               {option.label}
             </MenuItem>
           )}
