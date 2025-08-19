@@ -73,6 +73,9 @@ export default function EstateCard({ height, product }: EstateCardProps) {
         p: 1.25, 
         color: '#454545',
         cursor: 'pointer',
+        minHeight: '420px',
+        display: 'flex',
+        flexDirection: 'column',
       }}
       onClick={handleCardClick}
     >
@@ -217,7 +220,7 @@ export default function EstateCard({ height, product }: EstateCardProps) {
       </Box>
 
       {/* Informações do imóvel */}
-      <Stack spacing={1} sx={{ p: 1 }}>
+      <Stack spacing={1} sx={{ p: 1, flex: 1, justifyContent: 'space-between' }}>
         <Typography variant="h6" sx={{ fontSize: '16px', fontWeight: 600 }}>
           {product.title || 'Título não disponível'}
         </Typography>
@@ -229,12 +232,12 @@ export default function EstateCard({ height, product }: EstateCardProps) {
         <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.bedrooms || product.features?.number_of_bedrooms || product.number_of_bedrooms || 0} Dormitórios
+              {product.bedrooms || product.features?.bedrooms || product.features?.number_of_bedrooms || product.number_of_bedrooms || 0} Dormitórios
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.suites || product.features?.number_of_bathrooms || product.number_of_suites || product.bathroom || 0} Suíte
+              {product.suites || product.bathroom || product.features?.bathroom || product.features?.number_of_bathrooms || product.number_of_suites || 0} Suíte
             </Typography>
           </Stack>
         </Stack>
@@ -242,12 +245,12 @@ export default function EstateCard({ height, product }: EstateCardProps) {
         <Stack direction="row" spacing={2}>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.parking_spaces || product.features?.number_of_car_in_garage || product.number_of_parking_spaces || product.vacancies || 0} Vagas
+              {product.parking_spaces || product.vacancies || product.features?.vacancies || product.features?.number_of_car_in_garage || product.number_of_parking_spaces || 0} Vagas
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.area || product.total_area || 0}m² (Área útil)
+              {product.area || product.features?.area || product.total_area || 0}m² (Área útil)
             </Typography>
           </Stack>
         </Stack>
