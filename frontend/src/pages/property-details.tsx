@@ -248,7 +248,6 @@ export default function PropertyDetailPage() {
               autoplaySpeed={5000}
               dots
               arrows
-              sx={{ height: '100%' }}
             >
               {images.map((item) => (
                 <Box key={item.id} sx={{ position: 'relative', height: '400px' }}>
