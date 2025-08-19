@@ -1,0 +1,7 @@
+﻿{
+  "PORT": "8083",
+  "EXPIRES_IN": "1h",
+  "SECRET_KEY": "YourPlace",
+  "MONGODB_URI~": "mongodb://localhost/yourplace",
+  "MONGODB_URI": "mongodb+srv://dev_user:Welcome01@viper1.q2mkngw.mongodb.net/yourplace"
+}

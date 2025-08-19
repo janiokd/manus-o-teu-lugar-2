@@ -1,0 +1,347 @@
+// ----------------------------------------------------------------------
+
+// IF THIS TRANSLATION IS INCORRECT PLEASE IGNORE THIS AS THIS TRANSLATION IS FOR DEMO PURPOSES ONLY
+// We are happy if you can help improve the translation by sending an email to support@minimals.cc.
+
+// ----------------------------------------------------------------------
+
+const es = {
+  yes: `Sí`,
+  no: `No`,
+  home: `Inicio`,
+  title: `Título`,
+  state: `Estado`,
+  city: `Ciudad`,
+  neighborhood: `Vecindario`,
+  street: `Calle`,
+  category: `Categoría`,
+  todas: `Todas`,
+  location: `Ubicación`,
+  zipCode: `Código postal`,
+  address: `Dirección`,
+  select_all: `Seleccionar todo`,
+
+  optional:`opcional`,
+  rentalPeriod: `Período de alquiler`,
+  rentalDuration: `Duración del alquiler`,
+  days: `Días`,
+  weeks: `Semanas`,
+  months: `Meses`,
+  describe_all_features: `Describe a continuación todas las características de tu`,
+  describe_other_features: `Describe a continuación todas las características de tu`,
+  accurate_complete: `con el máximo detalle. ¡La información precisa y completa aumenta la visibilidad de su anuncio y atrae a más partes interesadas!`,
+
+  field_required: `Rellene este campo.`,
+  invalid_zipCode: `Código postal no válido`,
+
+  login: `Iniciar sesión`,
+  register: `Registrarse`,
+  account: `Cuenta`,
+  name: `Nombre`,
+  email: `Correo electrónico`,
+  type_here: `Escriba aquí`,
+
+  advertise: `Anunciar`,
+  properties: `Propiedades`,
+  buy: `Comprar`,
+  rent: `Alquilar`,
+  lease: `Arrendar`,
+  built_to_suit: `Construcción a medida`,
+  partnerships: `Socios`,
+  investment: `Inversión`,
+
+  write_location: `Escriba el estado, ciudad, vecindario, calle…`,
+  draw_location: `Dibuje la ubicación que está buscando en el mapa.`,
+  draw_area: `Dibuje el área donde busca su propiedad`,
+  min_less_than_max: `El valor mínimo debe ser menor que el valor máximo`,
+  max_greater_than_min: `El valor máximo debe ser mayor que el valor mínimo`,
+
+  Portugal: `Português`,
+  english: `English`,
+  spanish: `Español`,
+
+  owner: `Propietario`,
+  broker: `Corredor`,
+
+  or: `o`,
+
+  // header & menu
+  create_account: `Crear cuenta`,
+  advertise_free: `Anuncie aquí gratis`,
+  your_place: `Tu lugar`,
+  find_your_property: `Encuentra tu propiedad`,
+  featured_properties: `Propiedades destacadas`,
+  services: `Servicios`,
+  investment_simulations: `Simulaciones de inversión`,
+  about_us: `Sobre nosotros`,
+  personal_area: `Área personal`,
+  advertise_here: `Anunciar aquí`,
+
+  // footer
+  footer: {
+    home: `Inicio`,
+    browse: `Explorar`,
+    search_for_properties: `Buscar propiedades`,
+    register_properties: `Registrar propiedades`,
+    contact_us: `Contáctenos`,
+    footer_about_us: `Sobre nosotros`,
+    security_tips: `Consejos de seguridad`,
+    program_tutorials: `Tutoriales del programa`,
+    contact_us_2: `Contáctenos`,
+    where_we_are: `Dónde estamos`,
+    back_to_top: `Volver arriba`,
+    terms_of_use: `Términos de uso • Política de privacidad • Cookies • Legislación que rige la plataforma`,
+    all_rights: `Más que un hogar - Todos los derechos reservados`,
+    developed_by: `Desarrollado por JuCamillo`,
+  },
+
+  // register
+  user_type: `Tipo de usuario`,
+  full_name: `Nombre completo`,
+  phone_whatsapp: `Teléfono celular o WhatsApp`,
+  password: `Contraseña`,
+  confirm_password: `Confirme su contraseña`,
+  additional_security: `Seguridad adicional (Opcional)`,
+  photo_id: `Foto de identificación`,
+  register_description: `Los datos agregados por el propietario solo estarán disponibles para los clientes que también hayan completado el registro de seguridad adicional.`,
+  terms_and_conditions: `Acepto recibir información sobre la propiedad, noticias y otras comunicaciones promocionales.`,
+  privacyPolicy: `Al continuar, acepta los Términos de Uso y la Política de Privacidad, declara que tiene más de 18 años y permite el intercambio de sus datos en interacciones con la plataforma.`,
+  login_user: `Iniciar sesión`,
+  register_user: `Registrar usuario`,
+  have_account: `¿Ya tienes una cuenta?`,
+  no_account: `¿No tienes una cuenta?`,
+  select: `Seleccionar`,
+  enter_name: `Ingrese su nombre`,
+  enter_password: `Ingrese su contraseña`,
+  upload_title: `Haga clic aquí o arrastre para cargar una imagen de su identificación`,
+  individual: `Habitación Individual`,
+  legal: `Persona jurídica`,
+  email_required: `El correo electrónico es obligatorio.`,
+  password_required: `La contraseña es obligatoria.`,
+  name_required: `El nombre es obligatorio.`,
+  phone_required: `El número de teléfono es obligatorio.`,
+  must_valid_email: `El correo electrónico debe ser una dirección válida.`,
+  register_google: `Registrarse con Google`,
+  register_apple: `Registrarse con Apple`,
+  register_facebook: `Registrarse con Facebook`,
+  no_match_password: `La contraseña no coincide`,
+
+  card: {
+    featured: `Destacado`,
+    buy: `Comprar`,
+    property_name: `Nombre de la propiedad`,
+    bedrooms: `Habitaciones`,
+    bathroom: `Baños`,
+    livingroom: `Salas de estar`,
+    kitchen: `Cocina`,
+    swimmingpool: `Piscina`,
+    sauna: `Sauna`,
+    gym: `Gimnasio`,
+    courts: `Canchas`,
+    cinema: `Cine`,
+    gamesroom: `Sala de juegos`,
+    eventsroom: `Salón de eventos`,
+    barbecuegrills: `Parrillas`,
+    suite: `Suite`,
+    suites: `Suites`,
+    vacancies: `Plazas`,
+    usable_area: `Área útil`,
+    from: `Desde`,
+  },
+
+  homePage: {
+    home: `Inicio`,
+    title: `Todos tus sueños en una sola plataforma`,
+    advanced_search: `Búsqueda avanzada`,
+    search_for_property: `Buscar propiedad`,
+    draw_area_here: `Dibuja el área donde buscas tu propiedad aquí`,
+    featured_properties: `Propiedades destacadas`,
+    see_properties: `Ver algunas de las propiedades listadas`,
+    investment_simulations: `Simulaciones de inversión`,
+    simulations_with_back: `Simulaciones con el banco`,
+    real_estate_financing: `Financiamiento inmobiliario`,
+    monetary_insurance: `Seguro monetario`,
+    real_estate_insurance: `Seguro inmobiliario`,
+    simulate_here: `¡Simula aquí!`,
+    advertise_property_free: `¡Anuncia tu propiedad gratis!`,
+    simple_easy_fase: `Es simple, fácil y rápido.`,
+    advertise_here: `¡Anunciar aquí!`,
+  },
+
+  advertisePage: {
+    register_property: `Registrar propiedad`,
+    personal_area: `Área personal`,
+    type_of_property: `Tipo de propiedad`,
+    intended_negotiation: `Negociación prevista`,
+    add_on: `Complemento`,
+    add_on_placeholder: `Ingrese bloque, apartamento, etc.`,
+    hideAddress: `Ocultar dirección en el anuncio de la propiedad`,
+    hide_address_tooltip_title: `Ocultar dirección para`,
+    hide_address_tooltip: `Si, por razones de seguridad, prefiere ocultar la dirección exacta de su propiedad, le recomendamos suscribirse a este servicio.`,
+    hide_address_for: `Ocultar dirección en el anuncio de la propiedad para`,
+    enter_street: `Ingrese el nombre de la calle y el número`,
+    property_title: `Título de la propiedad`,
+    property_description: `Descripción de la propiedad`,
+    enter_description_of_property: `Ingrese una breve descripción de la propiedad`,
+    price_range: `Rango de precios`,
+    starting_from: `Desde`,
+    price: `Precio`,
+    main_page: `Imagen principal`,
+    upload_title_image: `Haga clic aquí para cargar una imagen o arrastre y suelte en esta área`,
+    upload_title_multi_image: `Haga clic aquí para cargar varias imágenes o arrastre y suelte en esta área`,
+    property_photos: `Fotos de la propiedad`,
+    property_features: `Características de la propiedad`,
+    enter_feature: `Ingrese una característica`,
+    add_new_feature: `Agregar nueva característica`,
+    property_proximity: `Proximidad de la propiedad`,
+    enter_business_similar: `Ingrese un negocio o similar`,
+    add_new_proxity: `Agregar nueva proximidad`,
+    security_addition: `Adición de seguridad`,
+    optional: `Opcional`,
+    attach_proof_property_registration: `Adjuntar prueba de registro de propiedad`,
+    attach_sales: `Adjuntar ventas`,
+    rental_authorization: `Autorización de alquiler`,
+    if_you_broker: `Si eres corredor`,
+    added_by_owner: `Los datos agregados por el propietario solo estarán disponibles para clientes con registro de seguridad adicional`,
+    upload_title_document: `Haga clic aquí o arrastre para cargar una imagen del documento.`,
+    privacyPolicy: `He leído y acepto la Política de Privacidad. Autorizo a O Teu Lugar y a los interoperadores del sistema a utilizar mis datos para optimizar mi experiencia y el funcionamiento de la plataforma.`,
+    add_new_location: `Se os imóvel tiver pontos de referencia, adicione-os para destacar sus proximidades`,
+    how_prefer_contact: `¿Cómo prefieres ser contactado?`,
+    by_phone_and_chat: `Teléfono y mensajes en nuestro chat (recomendado)`,
+    receive_message_via_tenant_profile: `Recibir todos los mensajes por chat con perfil de inquilino`,
+    what_receive_message_via_tenant_profile: `(¿Qué son los mensajes con perfil de inquilino?)`,
+    receive_message_via_email_and_app: `Recibirás una notificación de los mensajes por correo electrónico y en nuestra aplicación.`,
+    only_by_chat: `Solo por mensajes de chat`,
+    want_receive_message_via_tenant_profile: `Si lo deseas, puedes recibir mensajes con perfil de inquilino.`,
+    want_receive_message_via_email_and_app: `Recibirás una notificación de los mensajes por correo electrónico y en nuestra aplicación.`,
+    only_by_phone: `Solo por teléfono`,
+    contact_phone_number: `Número de teléfono de contacto`,
+    contact_phone_number_placeholder: `Por favor ingrese el número de teléfono de contacto`,
+    image_requirement_title: '40 fotos de hasta 32 megabytes cada una (gif, jpeg, png)',
+    image_requirement_description:
+      '6 vídeos de hasta 600 megabytes, formatos válidos: avi, mov, wmv, mpeg, rm, mp4, fiv, m2t y 3gp (vídeos móviles)',
+    searching: `Búsqueda`,
+  },
+
+  propertiesPage: {
+    our_properties: `Nuestras propiedades`,
+    keyword: `Palabra clave`,
+    property_value: `Valor de la propiedad`,
+    min_value: `Valor mínimo`,
+    max_value: `Valor máximo`,
+    rooms: `Habitaciones`,
+    size: `Tamaño`,
+    min_area: `Área mínima`,
+    max_area: `Área máxima`,
+    total_area: `Área total`,
+    search_property: `Buscar propiedad`,
+  },
+
+  buyPage: {
+    about_property: `Sobre la propiedad`,
+    interested: `¡Estoy interesado!`,
+    fill_info: `Complete los detalles a continuación para que podamos enviarle más información sobre este proyecto.`,
+    message: `Mensaje`,
+    send_message: `¡Enviar mensaje!`,
+    see_other_properties: `Ver otras propiedades`,
+  },
+
+  // tipos de propiedades
+  apart: `Apartamento`,
+  house: `Casa`,
+  room: `Habitación`,
+  commercial: `Comercial`,
+  farm: `Granja`,
+  sitesFarm: `Sitio/Granja`,
+  plot: `Parcela`,
+  land: `Terreno`,
+  garagesParking: `Garaje/Estacionamiento`,
+  billboard: `Servicio de publicidad (valla publicitaria)`,
+
+  // negociaciones
+  sale: `Venta`,
+  rental: `Alquiler`,
+  leasePartnership: `Arrendamiento / Asociación rural`,
+  builtToSuit: `Construcción a medida`,
+
+  // features
+  // apart
+  // primate
+  private_area: `Área Privada`,
+  area: `Área (m²)`,
+  internal_divisions:`Divisiones internas`,
+  number_of_bedrooms: `Número de dormitorios`,
+  number_of_bathrooms: `Número de baños`,
+  number_of_living_rooms: `Número de salas de estar`,
+  number_of_car_in_garage: `Número de coches en el garaje`,
+  kitchen_pantry: `Cocina/despensa`,
+  meeting_rooms: `Salas de reuniones`,
+  open_space_for_coworking: `Espacio abierto para coworking`,
+  number_of_kichens: `Número de cocinas`,
+  others: `Otros`,
+
+  // common
+  common_area: `Áreas Comunes`,
+  swimming_pool: `Piscina`,
+  sauna: `Sauna`,
+  gym: `Gimnasio`,
+  multi_sports_court: `Cancha polideportiva`,
+  cinema: `Cine`,
+  games_room: `Sala de juegos`,
+  events_room: `Sala de eventos`,
+  barbecue_grills: `Parrillas`,
+
+  // house
+
+  // room
+  number_of_bedrooms_in_house_apart: `Número de dormitorios en la casa o apartamento`,
+  maximum_number_of_people_in_house: `Número máximo de personas en la casa`,
+  shared_between_how_many_people: `Compartido entre cuántas personas`,
+  private_bathroom: `Baño privado`,
+  shared_bathroom_between_how_many_bedrooms: `Baño compartido entre cuántos dormitorios`,
+  bills_included: `Gastos incluidos`,
+  wi_fi: `Wi-Fi`,
+  common_room: `Sala común`,
+
+  // commercial
+  stores: `Tiendas`,
+  offices: `Oficinas`,
+
+  // farm
+  lake: `Lago`,
+  river: `Río`,
+  beach: `Playa`,
+  marina: `Marina`,
+  greenhouses: `Invernaderos`,
+  pasture: `Pasto`,
+  orchard: `Huerto`,
+  forest: `Bosque`,
+
+  // sitesfarms
+  buildings: `Construcciones`,
+  type_of_land_use: `Tipo de uso del suelo`,
+  farms:`Granjas`,
+  activities_carried_out_land: `Actividades ya realizadas en el suelo, Agricultura y/o Ganadería`,
+  native_forest: `Bosque Nativo`,
+
+  // plot
+  // private area
+  urban: `Urbano`,
+  rural: `Rural`,
+  subdivision: `Loteo`,
+  condominium: `Condominio`,
+
+  // common area
+
+  // land
+  buildig_authorization: `Autorización para Construcción`,
+
+  sports_media:`Medios deportivos`,
+  // garagesParking
+  hanger: `Hangar`,
+
+  // billboard
+  sports_facilities: `Instalaciones deportivas`,
+};
+
+export default es;

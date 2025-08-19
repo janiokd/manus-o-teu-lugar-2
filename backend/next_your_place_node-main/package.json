@@ -1,0 +1,54 @@
+{
+    "name": "node-mongo-registration-login-api",
+    "version": "1.0.0",
+    "description": "NodeJS + MongoDB API for User Management, Authentication and Registration",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cornflourblue/node-mongo-registration-login-api.git"
+    },
+    "scripts": {
+        "start": "node ./server.js",
+        "start:dev": "nodemon ./server.js",
+        "dev": "nodemon -r dotenv/config server.js"
+    },
+    "dependencies": {
+        "@azure/storage-blob": "^12.8.0",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "crypto": "^1.0.1",
+        "crypto-js": "^4.1.1",
+        "email-existence": "^0.1.6",
+        "express": "^4.17.1",
+        "express-jwt": "^6.0.0",
+        "git-rev": "^0.2.1",
+        "handlebars": "^4.7.7",
+        "http": "^0.0.1-security",
+        "jsonwebtoken": "^8.5.1",
+        "lodash": "^4.17.21",
+        "moment": "^2.29.1",
+        "mongodb": "^3.5.9",
+        "mongoose": "^5.9.21",
+        "multer": "^1.4.3",
+        "multer-gridfs-storage": "^5.0.1",
+        "node-notifier": "^10.0.0",
+        "nodemailer": "*",
+        "redux-persist": "^6.0.0",
+        "rootpath": "^0.1.2",
+        "socket.io": "^4.5.2",
+        "stripe": "^8.148.0",
+        "twilio": "^3.63.0",
+        "util": "^0.12.4",
+        "uuid": "^9.0.0",
+        "websocket": "^1.0.34",
+        "ws": "^8.9.0"
+    },
+    "devDependencies": {
+        "dotenv": "^8.2.0",
+        "nodemon": "^2.0.4"
+    },
+    "engines": {
+        "node" : ">=18.0.0 <20.0.0"
+    }
+}
