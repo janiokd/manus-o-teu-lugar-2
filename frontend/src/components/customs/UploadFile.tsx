@@ -127,7 +127,7 @@ export default function UploadFile({
 
       {helperText && helperText}
 
-      <RejectionFiles fileRejections={fileRejections} />
+      <RejectionFiles fileRejections={[...fileRejections]} />
 
       {hasFile && onDelete && (
         <IconButton
