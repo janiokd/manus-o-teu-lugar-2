@@ -3,7 +3,7 @@ import { Box, Typography, Stack, Chip, IconButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useLocales } from 'src/locales';
 import { PATH_PAGE } from 'src/routes/paths';
-import img from 'src/assets/images/default-property.jpg';
+import img from 'src/assets/images/img.png';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 
 // ----------------------------------------------------------------------
