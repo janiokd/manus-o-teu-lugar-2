@@ -161,7 +161,7 @@ export default function EstateCard({ height, product }: EstateCardProps) {
                 zIndex: 999,
               }}
             >
-              {finalList.map((_, index) => (
+              {finalList.map((_: any, index: number) => (
                 <Box
                   key={index}
                   sx={{
