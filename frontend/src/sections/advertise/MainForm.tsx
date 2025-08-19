@@ -181,7 +181,6 @@ export default function MainForm() {
         <RHFAutocomplete
           name="state"
           label={t(`state`)}
-          placeholder={t(`select`)}
           options={states.map((state) => ({
             label: `${state.name} (${state.isoCode})`,
             value: state.isoCode,
