@@ -65,7 +65,6 @@ export default function PropertisePage() {
         checkbox
         name="categories"
         label={t(`category`)}
-        placeholder={t(`select`)}
         variant="standard"
         options={categories.map((category) => ({ ...category, label: t(category.label) }))}
       />
@@ -74,13 +73,12 @@ export default function PropertisePage() {
       <RHFAutocomplete
         name="state"
         label={t(`state`)}
-        placeholder={t(`select`)}
         options={states.map((state) => ({
           label: `${state.name} (${state.isoCode})`,
           value: state.isoCode,
         }))}
         renderOption={(props, option) => (
-          <MenuItem key={option.value} {...props}>
+          <MenuItem {...props}>
             {option.label}
           </MenuItem>
         )}
@@ -89,12 +87,11 @@ export default function PropertisePage() {
       <RHFAutocomplete
         name="city"
         label={t(`city`)}
-        placeholder={t(`select`)}
         options={cities
           .filter((city) => city.stateCode === values.state?.value)
           .map((c) => ({ label: c.name, value: c.name, lat: c.latitude, lng: c.longitude }))}
         renderOption={(props, option) => (
-          <MenuItem key={option.value} {...props}>
+          <MenuItem {...props}>
             {option.label}
           </MenuItem>
         )}
@@ -103,11 +100,10 @@ export default function PropertisePage() {
       <RHFAutocomplete
         name="neighborhood"
         label={t(`neighborhood`)}
-        placeholder={t(`select`)}
         options={neighborhoods}
         freeSolo
         renderOption={(props, option) => (
-          <MenuItem key={option.value} {...props}>
+          <MenuItem {...props}>
             {option.label}
           </MenuItem>
         )}
