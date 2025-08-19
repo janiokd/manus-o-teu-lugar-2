@@ -208,7 +208,6 @@ export default function MainForm() {
         <RHFAutocomplete
           name="neighborhood"
           label={t(`neighborhood`)}
-          placeholder={t(`select`)}
           options={neighborhoods}
           freeSolo
           renderOption={(props, option) => (
