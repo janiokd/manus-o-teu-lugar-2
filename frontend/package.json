@@ -54,7 +54,6 @@
     "date-fns": "^2.29.3",
     "firebase": "^9.17.1",
     "framer-motion": "^9.0.4",
-    "google-maps-react": "^2.0.6",
     "googleapis": "^149.0.0",
     "highlight.js": "^11.7.0",
     "i18next": "^22.4.10",
