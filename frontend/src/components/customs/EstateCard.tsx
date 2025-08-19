@@ -229,12 +229,12 @@ export default function EstateCard({ height, product }: EstateCardProps) {
         <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.bedrooms || product.number_of_bedrooms || 0} Dormitórios
+              {product.bedrooms || product.features?.number_of_bedrooms || product.number_of_bedrooms || 0} Dormitórios
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.suites || product.number_of_suites || 0} Suíte
+              {product.suites || product.features?.number_of_bathrooms || product.number_of_suites || product.bathroom || 0} Suíte
             </Typography>
           </Stack>
         </Stack>
@@ -242,7 +242,7 @@ export default function EstateCard({ height, product }: EstateCardProps) {
         <Stack direction="row" spacing={2}>
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Typography variant="caption" sx={{ fontSize: '12px' }}>
-              {product.parking_spaces || product.number_of_parking_spaces || 0} Vagas
+              {product.parking_spaces || product.features?.number_of_car_in_garage || product.number_of_parking_spaces || product.vacancies || 0} Vagas
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" spacing={0.5}>
@@ -257,7 +257,7 @@ export default function EstateCard({ height, product }: EstateCardProps) {
             A partir de
           </Typography>
           <Typography variant="h6" sx={{ fontSize: '14px', fontWeight: 600 }}>
-            R$ {product.price ? Number(product.price).toLocaleString('pt-BR') : '0'}
+            R$ {product.price ? (typeof product.price === 'string' && product.price.includes(',') ? product.price : Number(product.price).toLocaleString('pt-BR')) : '0'}
           </Typography>
         </Stack>
       </Stack>
