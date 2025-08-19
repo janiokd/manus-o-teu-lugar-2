@@ -358,7 +358,7 @@ export default function PropertyDetailPage() {
                   {t(`buyPage.about_property`)}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {property.description || 'Descrição não disponível.'}
+                  {'Descrição detalhada do imóvel não disponível no momento.'}
                 </Typography>
               </Stack>
 
