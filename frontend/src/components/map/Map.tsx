@@ -1,9 +1,7 @@
 import React from 'react';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { GoogleMap } from '@react-google-maps/api';
 // @mui
 import { Box, Stack, Typography } from '@mui/material';
-// config-global
-import { MAP_API } from 'src/config-global';
 // assets
 import MapIcon from 'src/assets/icons/MapIcon';
 
@@ -18,8 +16,6 @@ interface MapProps {
 }
 
 export default function Map({ text, height = '460px' }: MapProps) {
-  const apiKey = MAP_API as string;
-
   const mapOptions = {
     fullscreenControl: false, // Disable fullscreen control
     mapTypeControl: false, // Disable map type selector
@@ -37,16 +33,14 @@ export default function Map({ text, height = '460px' }: MapProps) {
         borderRadius: '30px',
       }}
     >
-      <LoadScript googleMapsApiKey={apiKey}>
-        <GoogleMap
-          zoom={12}
-          center={center}
-          options={mapOptions}
-          mapContainerStyle={{ width: '100%', height }}
-        >
-          {/* Add markers or additional map features here */}
-        </GoogleMap>
-      </LoadScript>
+      <GoogleMap
+        zoom={12}
+        center={center}
+        options={mapOptions}
+        mapContainerStyle={{ width: '100%', height }}
+      >
+        {/* Add markers or additional map features here */}
+      </GoogleMap>
       {text && (
         <Stack
           direction="row"

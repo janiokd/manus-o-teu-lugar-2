@@ -35,6 +35,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 // @mui
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+// google maps
+import { LoadScript } from '@react-google-maps/api';
 // redux
 import { store } from '../redux/store';
 // utils
@@ -60,6 +62,9 @@ import { AuthProvider } from '../auth/JwtContext';
 
 // ----------------------------------------------------------------------
 
+// Constante para bibliotecas do Google Maps (evita recriar array a cada render)
+const GOOGLE_MAPS_LIBRARIES: ("drawing" | "places" | "geometry")[] = ['drawing', 'places', 'geometry'];
+
 const clientSideEmotionCache = createEmotionCache();
 
 type NextPageWithLayout = NextPage & {
@@ -82,29 +87,34 @@ export default function MyApp(props: MyAppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <SessionProvider session={pageProps.session}>
-        <AuthProvider>
-          <ReduxProvider store={store}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <SettingsProvider>
-                <MotionLazyContainer>
-                  <ThemeProvider>
-                    {/* <ThemeSettings> */}
-                    <ThemeLocalization>
-                      <SnackbarProvider>
-                        {/* <StyledChart /> */}
-                        <ProgressBar />
-                        {getLayout(<Component {...pageProps} />)}
-                      </SnackbarProvider>
-                    </ThemeLocalization>
-                    {/* </ThemeSettings> */}
-                  </ThemeProvider>
-                </MotionLazyContainer>
-              </SettingsProvider>
-            </LocalizationProvider>
-          </ReduxProvider>
-        </AuthProvider>
-      </SessionProvider>
+      <LoadScript 
+        googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''} 
+        libraries={GOOGLE_MAPS_LIBRARIES}
+      >
+        <SessionProvider session={pageProps.session}>
+          <AuthProvider>
+            <ReduxProvider store={store}>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <SettingsProvider>
+                  <MotionLazyContainer>
+                    <ThemeProvider>
+                      {/* <ThemeSettings> */}
+                      <ThemeLocalization>
+                        <SnackbarProvider>
+                          {/* <StyledChart /> */}
+                          <ProgressBar />
+                          {getLayout(<Component {...pageProps} />)}
+                        </SnackbarProvider>
+                      </ThemeLocalization>
+                      {/* </ThemeSettings> */}
+                    </ThemeProvider>
+                  </MotionLazyContainer>
+                </SettingsProvider>
+              </LocalizationProvider>
+            </ReduxProvider>
+          </AuthProvider>
+        </SessionProvider>
+      </LoadScript>
     </CacheProvider>
   );
 }

@@ -2,20 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   Marker,
   GoogleMap,
-  LoadScript,
   DrawingManager,
   InfoWindow,
 } from '@react-google-maps/api';
 // @mui
 import { Box, Stack, Typography } from '@mui/material';
 // config-global
-import { MAP_API, HOST_API } from 'src/config-global';
+import { HOST_API } from 'src/config-global';
 // assets
 import MapIcon from 'src/assets/icons/MapIcon';
 import RoundButton from '../customs/RoundButton';
-
-// Constante para bibliotecas do Google Maps (evita recriar array a cada render)
-const GOOGLE_MAPS_LIBRARIES: ("drawing" | "places" | "geometry")[] = ['drawing', 'places', 'geometry'];
 
 export const center = {
   lat: -19.9167, // Belo Horizonte, Brasil
@@ -499,146 +495,144 @@ export default function MapWithDrawing({
 
 
   return (
-    <LoadScript googleMapsApiKey={MAP_API || ''} libraries={GOOGLE_MAPS_LIBRARIES}>
-      <Box
-        sx={{
-          bgcolor: 'white',
-          overflow: 'hidden',
-          position: 'relative',
-          borderRadius: '30px',
+    <Box
+      sx={{
+        bgcolor: 'white',
+        overflow: 'hidden',
+        position: 'relative',
+        borderRadius: '30px',
+      }}
+    >
+      <GoogleMap
+        zoom={zoomLevel}
+        center={location}
+        options={mapOptions}
+        mapContainerStyle={{ width: '100%', height }}
+        onLoad={(map) => {
+          mapRef.current = map;
         }}
+        onClick={handleMapClick}
+        onRightClick={handleMapRightClick}
       >
-        <GoogleMap
-          zoom={zoomLevel}
-          center={location}
-          options={mapOptions}
-          mapContainerStyle={{ width: '100%', height }}
-          onLoad={(map) => {
-            mapRef.current = map;
+        <DrawingManager
+          onLoad={(dm) => {
+            drawingManagerRef.current = dm;
+            dm.addListener('drawingmode_changed', handleDrawingModeChanged);
           }}
-          onClick={handleMapClick}
-          onRightClick={handleMapRightClick}
-        >
-          <DrawingManager
-            onLoad={(dm) => {
-              drawingManagerRef.current = dm;
-              dm.addListener('drawingmode_changed', handleDrawingModeChanged);
+          onOverlayComplete={onOverlayComplete}
+          onRectangleComplete={onShapeComplete}
+          onCircleComplete={onShapeComplete}
+          onPolygonComplete={onShapeComplete}
+          onPolylineComplete={onShapeComplete}
+          onMarkerComplete={onShapeComplete}
+          options={{
+            drawingControl: true,
+            drawingControlOptions: {
+              // position: google.maps.ControlPosition.TOP_CENTER,
+            },
+          }}
+        />
+        {/* <Marker position={location} /> */}
+        {markerPosition ? <Marker position={markerPosition} draggable onDragEnd={handleMarkerDragEnd} /> : null}
+        
+        {/* Marcadores dos imóveis */}
+        {properties.map((property) => (
+          <Marker
+            key={property.id}
+            position={{
+              lat: property.latitude!,
+              lng: property.longitude!,
             }}
-            onOverlayComplete={onOverlayComplete}
-            onRectangleComplete={onShapeComplete}
-            onCircleComplete={onShapeComplete}
-            onPolygonComplete={onShapeComplete}
-            onPolylineComplete={onShapeComplete}
-            onMarkerComplete={onShapeComplete}
-            options={{
-              drawingControl: true,
-              drawingControlOptions: {
-                // position: google.maps.ControlPosition.TOP_CENTER,
-              },
+            onClick={() => setSelectedProperty(property)}
+            icon={{
+              url: 'data:image/svg+xml;base64,' + btoa(`
+                <svg width="30" height="40" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 0C6.716 0 0 6.716 0 15c0 8.284 15 25 15 25s15-16.716 15-25C30 6.716 23.284 0 15 0z" fill="#FF6B35"/>
+                  <circle cx="15" cy="15" r="8" fill="white"/>
+                  <text x="15" y="19" text-anchor="middle" font-size="10" font-weight="bold" fill="#FF6B35">R$</text>
+                </svg>
+              `),
+              scaledSize: new google.maps.Size(30, 40),
+              anchor: new google.maps.Point(15, 40),
             }}
           />
-          {/* <Marker position={location} /> */}
-          {markerPosition ? <Marker position={markerPosition} draggable onDragEnd={handleMarkerDragEnd} /> : null}
-          
-          {/* Marcadores dos imóveis */}
-          {properties.map((property) => (
-            <Marker
-              key={property.id}
-              position={{
-                lat: property.latitude!,
-                lng: property.longitude!,
-              }}
-              onClick={() => setSelectedProperty(property)}
-              icon={{
-                url: 'data:image/svg+xml;base64,' + btoa(`
-                  <svg width="30" height="40" viewBox="0 0 30 40" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 0C6.716 0 0 6.716 0 15c0 8.284 15 25 15 25s15-16.716 15-25C30 6.716 23.284 0 15 0z" fill="#FF6B35"/>
-                    <circle cx="15" cy="15" r="8" fill="white"/>
-                    <text x="15" y="19" text-anchor="middle" font-size="10" font-weight="bold" fill="#FF6B35">R$</text>
-                  </svg>
-                `),
-                scaledSize: new google.maps.Size(30, 40),
-                anchor: new google.maps.Point(15, 40),
-              }}
-            />
-          ))}
-          
-          {/* InfoWindow para mostrar detalhes do imóvel */}
-          {selectedProperty && (
-            <InfoWindow
-              position={{
-                lat: selectedProperty.latitude!,
-                lng: selectedProperty.longitude!,
-              }}
-              onCloseClick={() => setSelectedProperty(null)}
-            >
-              <Box sx={{ minWidth: 200, p: 1 }}>
-                <Typography variant="h6" sx={{ fontSize: '14px', fontWeight: 'bold', mb: 1 }}>
-                  {selectedProperty.title}
-                </Typography>
-                <Typography variant="body2" sx={{ fontSize: '12px', mb: 0.5 }}>
-                  {selectedProperty.address}
-                </Typography>
-                <Typography variant="body2" sx={{ fontSize: '12px', mb: 0.5 }}>
-                  Tipo: {selectedProperty.type}
-                </Typography>
-                <Typography variant="body2" sx={{ fontSize: '12px', mb: 0.5 }}>
-                  Bairro: {selectedProperty.neighborhood}
-                </Typography>
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    fontSize: '16px', 
-                    fontWeight: 'bold', 
-                    color: '#FF6B35',
-                    mt: 1 
-                  }}
-                >
-                  R$ {Number(selectedProperty.price).toLocaleString('pt-BR')}
-                </Typography>
-              </Box>
-            </InfoWindow>
-          )}
-        </GoogleMap>
-        {text && (
-          <Stack
-            alignItems="center"
-            justifyContent="flex-end"
-            spacing={1}
-            sx={{
-              top: '30px',
-              right: '30px',
-              borderRadius: '40px',
-              position: 'absolute',
+        ))}
+        
+        {/* InfoWindow para mostrar detalhes do imóvel */}
+        {selectedProperty && (
+          <InfoWindow
+            position={{
+              lat: selectedProperty.latitude!,
+              lng: selectedProperty.longitude!,
             }}
+            onCloseClick={() => setSelectedProperty(null)}
           >
-            <RoundButton
-              size="large"
-              color="secondary"
-              variant="contained"
-              startIcon={<MapIcon />}
-              onClick={handleDrawingMode}
-            >
-              {text}
-            </RoundButton>
-            
-            {shapes.length > 0 && (
-              <RoundButton
-                size="medium"
-                color="primary"
-                variant="outlined"
-                onClick={resetFilters}
+            <Box sx={{ minWidth: 200, p: 1 }}>
+              <Typography variant="h6" sx={{ fontSize: '14px', fontWeight: 'bold', mb: 1 }}>
+                {selectedProperty.title}
+              </Typography>
+              <Typography variant="body2" sx={{ fontSize: '12px', mb: 0.5 }}>
+                {selectedProperty.address}
+              </Typography>
+              <Typography variant="body2" sx={{ fontSize: '12px', mb: 0.5 }}>
+                Tipo: {selectedProperty.type}
+              </Typography>
+              <Typography variant="body2" sx={{ fontSize: '12px', mb: 0.5 }}>
+                Bairro: {selectedProperty.neighborhood}
+              </Typography>
+              <Typography 
+                variant="h6" 
                 sx={{ 
-                  backgroundColor: 'white',
-                  '&:hover': { backgroundColor: '#f5f5f5' }
+                  fontSize: '16px', 
+                  fontWeight: 'bold', 
+                  color: '#FF6B35',
+                  mt: 1 
                 }}
               >
-                Limpar Filtros ({properties.length} imóveis)
-              </RoundButton>
-            )}
-          </Stack>
+                R$ {Number(selectedProperty.price).toLocaleString('pt-BR')}
+              </Typography>
+            </Box>
+          </InfoWindow>
         )}
-      </Box>
-    </LoadScript>
+      </GoogleMap>
+      {text && (
+        <Stack
+          alignItems="center"
+          justifyContent="flex-end"
+          spacing={1}
+          sx={{
+            top: '30px',
+            right: '30px',
+            borderRadius: '40px',
+            position: 'absolute',
+          }}
+        >
+          <RoundButton
+            size="large"
+            color="secondary"
+            variant="contained"
+            startIcon={<MapIcon />}
+            onClick={handleDrawingMode}
+          >
+            {text}
+          </RoundButton>
+          
+          {shapes.length > 0 && (
+            <RoundButton
+              size="medium"
+              color="primary"
+              variant="outlined"
+              onClick={resetFilters}
+              sx={{ 
+                backgroundColor: 'white',
+                '&:hover': { backgroundColor: '#f5f5f5' }
+              }}
+            >
+              Limpar Filtros ({properties.length} imóveis)
+            </RoundButton>
+          )}
+        </Stack>
+      )}
+    </Box>
   );
 }
