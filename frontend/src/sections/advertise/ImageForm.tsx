@@ -69,7 +69,7 @@ export default function ImageForm() {
           <RHFUpload
             name="image"
             title={t(`advertisePage.upload_title_image`)}
-            maxSize={3145728}
+            maxSize={10485760}
             onDrop={handleDropSingleFile}
             onDelete={handleRemoveSingleFile}
           />
@@ -92,7 +92,7 @@ export default function ImageForm() {
             multiple
             name="images"
             title={t(`advertisePage.upload_title_multi_image`)}
-            maxSize={3145728}
+            maxSize={10485760}
             onDrop={handleDropMultiFile}
             onRemove={handleRemoveMultiFile}
             onRemoveAll={handleRemoveAllFiles}

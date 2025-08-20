@@ -42,6 +42,7 @@ app.use((req, res, next) => {
 app.use("/api/util", require("./util/util.controller"));
 app.use("/api/user", require("./user/user.controller"));
 app.use("/api/property", require("./property/property.controller"));
+app.use("/api/upload", require("./upload/upload.controller"));
 
 // global error handler
 app.use(errorHandler);

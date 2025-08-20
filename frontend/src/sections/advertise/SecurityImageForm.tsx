@@ -83,7 +83,7 @@ export default function SecurityImageForm() {
             <RHFUpload
               name="docImage"
               title={t(`advertisePage.upload_title_document`)}
-              maxSize={3145728}
+              maxSize={10485760}
               onDrop={handleDropSingleFile}
               onDelete={handleRemoveSingleFile}
             />
@@ -112,7 +112,7 @@ export default function SecurityImageForm() {
               multiple
               name="docImages"
               title={t(`advertisePage.upload_title_document`)}
-              maxSize={3145728}
+              maxSize={10485760}
               onDrop={handleDropMultiFile}
               onRemove={handleRemoveMultiFile}
               onRemoveAll={handleRemoveAllFiles}

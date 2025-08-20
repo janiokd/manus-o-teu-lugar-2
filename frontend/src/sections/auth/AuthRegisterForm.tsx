@@ -287,7 +287,7 @@ export default function AuthRegisterForm() {
           <RHFUpload
             name="cover"
             title={t(`upload_title`)}
-            maxSize={3145728}
+            maxSize={10485760}
             onDrop={handleDrop}
             onDelete={handleRemoveFile}
           />
