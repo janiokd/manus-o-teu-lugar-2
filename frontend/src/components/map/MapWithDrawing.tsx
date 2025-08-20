@@ -227,7 +227,7 @@ export default function MapWithDrawing({
 
   // Effect para localização padrão
   useEffect(() => {
-    if (defaultLocation && defaultLocation.geometry) {
+    if (defaultLocation && defaultLocation.geometry && defaultLocation.geometry.location) {
       setLocation({
         lat: defaultLocation.geometry.location.lat(),
         lng: defaultLocation.geometry.location.lng(),
