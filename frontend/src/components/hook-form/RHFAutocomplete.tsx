@@ -39,7 +39,10 @@ export default function RHFAutocomplete<
           freeSolo={(other as any).freeSolo}
           onChange={(event, newValue) => {
             // Para freeSolo, newValue pode ser string ou objeto
-            const value = typeof newValue === 'string' ? newValue : newValue?.label || newValue;
+            let value = newValue;
+            if (newValue && typeof newValue === 'object' && 'label' in newValue) {
+              value = (newValue as any).label;
+            }
             setValue(name, value, { shouldValidate: true });
           }}
           onInputChange={(event, newInputValue) => {
