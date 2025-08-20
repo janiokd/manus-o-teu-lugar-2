@@ -216,9 +216,9 @@ export default function MapWithDrawing({
   // Função para resetar filtros
   const resetFilters = () => {
     setProperties(allProperties);
-    shapes.forEach(({ shape }) => {
-      if (shape && shape.setMap) {
-        shape.setMap(null);
+    shapes.forEach((event) => {
+      if (event.overlay && event.overlay.setMap) {
+        event.overlay.setMap(null);
       }
     });
     setShapes([]);
