@@ -37,7 +37,17 @@ export default function RHFAutocomplete<
         <Autocomplete
           {...field}
           freeSolo={(other as any).freeSolo}
-          onChange={(event, newValue) => setValue(name, newValue, { shouldValidate: true })}
+          onChange={(event, newValue) => {
+            // Para freeSolo, newValue pode ser string ou objeto
+            const value = typeof newValue === 'string' ? newValue : newValue?.label || newValue;
+            setValue(name, value, { shouldValidate: true });
+          }}
+          onInputChange={(event, newInputValue) => {
+            // Permitir digitação livre quando freeSolo está ativo
+            if ((other as any).freeSolo) {
+              setValue(name, newInputValue, { shouldValidate: true });
+            }
+          }}
           renderInput={(params) => (
             <TextField
               label={label}

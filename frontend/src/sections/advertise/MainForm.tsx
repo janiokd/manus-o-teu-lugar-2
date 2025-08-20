@@ -65,24 +65,29 @@ export default function MainForm() {
 
   const fetchCep = async () => {
     if (values.zipCode.length === 9) {
-      const response = await axios.get(`${HOST_API}/util/fetchCep`, {
-        params: {
-          zipCode: values.zipCode,
-        },
-      });
-      const result = await response.data;
+      try {
+        const response = await axios.get(`${HOST_API}/api/util/fetchCep`, {
+          params: {
+            zipCode: values.zipCode,
+          },
+        });
+        const result = await response.data;
 
-      if (Object.keys(result).length > 1) {
-        setValue('state', `${result.estado}(${result.uf})`);
-        setValue('city', result.localidade);
-        setValue('neighborhood', result.bairro);
-        setValue(
-          'address',
-          `${result.logradouro}`
-          // `${result.logradouro},  ${result.bairro}, ${result.localidade} - ${result.uf}, ${result.cep}`
-        );
-      } else {
-        enqueueSnackbar(t(`invalid_zipCode`));
+        if (Object.keys(result).length > 1) {
+          setValue('state', `${result.estado} (${result.uf})`);
+          setValue('city', result.localidade);
+          setValue('neighborhood', result.bairro);
+          setValue(
+            'address',
+            `${result.logradouro}`
+            // `${result.logradouro},  ${result.bairro}, ${result.localidade} - ${result.uf}, ${result.cep}`
+          );
+        } else {
+          enqueueSnackbar(t(`invalid_zipCode`));
+        }
+      } catch (error) {
+        console.error('Erro ao buscar CEP:', error);
+        enqueueSnackbar('Erro ao buscar informações do CEP');
       }
     }
   };
