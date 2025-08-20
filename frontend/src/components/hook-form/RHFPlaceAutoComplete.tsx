@@ -11,7 +11,7 @@ import LocationIcon from 'src/assets/icons/LocationIcon';
 // config-global
 import { HEADER } from 'src/config-global';
 //
-import { center } from '../map/MapWithDrawing';
+import { defaultCenter } from '../map/MapWithDrawing';
 
 type Props = TextFieldProps & {
   name: string;
@@ -30,7 +30,7 @@ export default function RHFPlaceAutoComplete({ name, label, onSelectPlace, ...ot
 
   const [inputValue, setInputValue] = useState('');
   const [showPredefined, setShowPredefined] = useState(false);
-  const [location, setLocation] = useState<{ lat: number; lng: number }>(center);
+  const [location, setLocation] = useState<{ lat: number; lng: number }>(defaultCenter);
 
   const movingScroll = () => {
     setShowPredefined(false);
