@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 // @mui
 import { Box, TextField, TextFieldProps, MenuItem, Paper, ClickAwayListener } from '@mui/material';
-import { Autocomplete, LoadScript } from '@react-google-maps/api';
+import { Autocomplete, useJsApiLoader } from '@react-google-maps/api';
 // locales
 import { useLocales } from 'src/locales';
 // assets
@@ -12,6 +12,9 @@ import LocationIcon from 'src/assets/icons/LocationIcon';
 import { HEADER, MAP_API } from 'src/config-global';
 //
 import { center } from '../map/MapWithDrawing';
+
+// Constante para evitar recriação do array a cada render
+const GOOGLE_MAPS_LIBRARIES: ("drawing" | "places")[] = ['drawing', 'places'];
 
 type Props = TextFieldProps & {
   name: string;
@@ -31,6 +34,12 @@ export default function RHFPlaceAutoComplete({ name, label, onSelectPlace, ...ot
   const [inputValue, setInputValue] = useState('');
   const [showPredefined, setShowPredefined] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number }>(center);
+
+  // Usar useJsApiLoader ao invés de LoadScript
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: MAP_API || '',
+    libraries: GOOGLE_MAPS_LIBRARIES,
+  });
 
   const movingScroll = () => {
     setShowPredefined(false);
@@ -128,87 +137,113 @@ export default function RHFPlaceAutoComplete({ name, label, onSelectPlace, ...ot
     }
   };
 
-  return (
-    <LoadScript googleMapsApiKey={MAP_API || ''} libraries={['drawing', 'places']}>
-      <Box sx={{ width: 1, position: 'relative' }}>
-        <Controller
-          name={name}
-          control={control}
-          defaultValue=""
-          render={({ field: { onChange, value } }) => (
-            <Autocomplete
-              onLoad={(ref) => {
-                autocompleteRef.current = ref;
-                if (ref) {
-                  ref.setOptions({ componentRestrictions: { country: 'BR' } });
-                }
-              }}
-              onPlaceChanged={() => {
-                if (autocompleteRef.current) {
-                  const place = autocompleteRef.current.getPlace();
-                  if (place?.formatted_address) {
-                    handleSelect(place.formatted_address, onChange);
-                  }
-                  if (place && onSelectPlace) {
-                    onSelectPlace(place);
-                  }
-                }
-              }}
-            >
-              <ClickAwayListener onClickAway={() => setShowPredefined(false)}>
-                <Box sx={{ position: 'relative' }}>
-                  <TextField
-                    fullWidth
-                    value={value}
-                    label={label}
-                    variant="standard"
-                    inputRef={inputRef}
-                    placeholder={label}
-                    onChange={(e) => handleInputChange(e, onChange)}
-                    onClick={handleFocus}
-                    inputProps={{
-                      sx: {
-                        fontWeight: 400,
-                        fontSize: '14px',
-                        color: 'text.secondary',
-                      },
-                    }}
-                    InputLabelProps={{
-                      shrink: true,
-                      sx: {
-                        fontWeight: 600,
-                        fontSize: '19px',
-                        color: 'text.primary',
-                      },
-                    }}
-                    onKeyDown={handleKeyDown}
-                    {...other}
-                  />
+  // Mostrar loading ou erro se necessário
+  if (loadError) {
+    console.error('Error loading Google Maps:', loadError);
+    return (
+      <TextField
+        fullWidth
+        label={label}
+        variant="standard"
+        value="Erro ao carregar Google Maps"
+        disabled
+        {...other}
+      />
+    );
+  }
 
-                  {/* Predefined Options - Shown on Focus */}
-                  {showPredefined && (
-                    <Paper sx={{ position: 'absolute', width: '100%', zIndex: 10 }}>
-                      <MenuItem
-                        onClick={() => {
-                          setShowPredefined(false);
-                          inputRef.current?.focus();
-                        }}
-                      >
-                        <LocationIcon sx={{ pr: 1, ml: -1 }} />
-                        {t('write_location')}
-                      </MenuItem>
-                      <MenuItem onClick={() => movingScroll()}>
-                        <MapIcon sx={{ pr: 1, ml: -1 }} />
-                        {t('draw_location')}
-                      </MenuItem>
-                    </Paper>
-                  )}
-                </Box>
-              </ClickAwayListener>
-            </Autocomplete>
-          )}
-        />
-      </Box>
-    </LoadScript>
+  if (!isLoaded) {
+    return (
+      <TextField
+        fullWidth
+        label={label}
+        variant="standard"
+        value="Loading..."
+        disabled
+        {...other}
+      />
+    );
+  }
+
+  return (
+    <Box sx={{ width: 1, position: 'relative' }}>
+      <Controller
+        name={name}
+        control={control}
+        defaultValue=""
+        render={({ field: { onChange, value } }) => (
+          <Autocomplete
+            onLoad={(ref) => {
+              autocompleteRef.current = ref;
+              if (ref) {
+                ref.setOptions({ componentRestrictions: { country: 'BR' } });
+              }
+            }}
+            onPlaceChanged={() => {
+              if (autocompleteRef.current) {
+                const place = autocompleteRef.current.getPlace();
+                if (place?.formatted_address) {
+                  handleSelect(place.formatted_address, onChange);
+                }
+                if (place && onSelectPlace) {
+                  onSelectPlace(place);
+                }
+              }
+            }}
+          >
+            <ClickAwayListener onClickAway={() => setShowPredefined(false)}>
+              <Box sx={{ position: 'relative' }}>
+                <TextField
+                  fullWidth
+                  value={value}
+                  label={label}
+                  variant="standard"
+                  inputRef={inputRef}
+                  placeholder={label}
+                  onChange={(e) => handleInputChange(e, onChange)}
+                  onClick={handleFocus}
+                  inputProps={{
+                    sx: {
+                      fontWeight: 400,
+                      fontSize: '14px',
+                      color: 'text.secondary',
+                    },
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                    sx: {
+                      fontWeight: 600,
+                      fontSize: '19px',
+                      color: 'text.primary',
+                    },
+                  }}
+                  onKeyDown={handleKeyDown}
+                  {...other}
+                />
+
+                {/* Predefined Options - Shown on Focus */}
+                {showPredefined && (
+                  <Paper sx={{ position: 'absolute', width: '100%', zIndex: 10 }}>
+                    <MenuItem
+                      onClick={() => {
+                        setShowPredefined(false);
+                        inputRef.current?.focus();
+                      }}
+                    >
+                      <LocationIcon sx={{ pr: 1, ml: -1 }} />
+                      {t('write_location')}
+                    </MenuItem>
+                    <MenuItem onClick={() => movingScroll()}>
+                      <MapIcon sx={{ pr: 1, ml: -1 }} />
+                      {t('draw_location')}
+                    </MenuItem>
+                  </Paper>
+                )}
+              </Box>
+            </ClickAwayListener>
+          </Autocomplete>
+        )}
+      />
+    </Box>
   );
 }
