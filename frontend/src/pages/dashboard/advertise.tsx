@@ -18,6 +18,8 @@ import { useLocales } from 'src/locales';
 import { features } from 'src/assets/data';
 // next
 import { useRouter } from 'next/router';
+// utils
+import axios from 'axios';
 // layouts
 import DashboardLayout from 'src/layouts/dashboard';
 // components
