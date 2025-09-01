@@ -153,16 +153,70 @@ export default function AdvertisePage() {
     try {
       console.log('formData:', form);
       
-      // Convert CustomFile to string for images
+      // Função para converter File para base64
+      const fileToBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      };
+
+      // Processar imagens para upload
+      let imageUrls: string[] = [];
+      
+      if (form.images && form.images.length > 0) {
+        console.log(`Processando ${form.images.length} imagens...`);
+        
+        // Filtrar apenas arquivos File (não strings/URLs)
+        const fileImages = form.images.filter(img => img instanceof File) as File[];
+        
+        if (fileImages.length > 0) {
+          try {
+            // Converter para base64
+            const base64Images = await Promise.all(
+              fileImages.map(async (file, index) => ({
+                data: await fileToBase64(file),
+                name: `property_${Date.now()}_${index}.${file.type.split('/')[1]}`,
+                type: file.type
+              }))
+            );
+
+            console.log('Enviando imagens para S3...');
+            
+            // Upload para S3 via endpoint simplificado
+            const response = await axios.post('/api/util/upload-images', {
+              images: base64Images
+            });
+
+            if (response.data.success) {
+              imageUrls = response.data.images;
+              console.log(`Upload concluído: ${imageUrls.length} imagens`);
+            } else {
+              throw new Error(response.data.message || 'Erro no upload');
+            }
+            
+          } catch (uploadError) {
+            console.error('Erro no upload de imagens:', uploadError);
+            enqueueSnackbar('Erro ao fazer upload das imagens. Tente novamente.', { variant: 'error' });
+            return;
+          }
+        }
+      }
+      
+      // Preparar dados do formulário com URLs reais das imagens
       const processedForm = {
         ...form,
-        images: form.images?.map(img => typeof img === 'string' ? img : img.preview || '') || [],
+        images: imageUrls, // URLs reais do S3
         features: { ...values.features[values.type] }
       };
       
+      console.log('Dados processados:', processedForm);
+      
       await dispatch(registerProduct(processedForm));
       reset();
-      enqueueSnackbar('Create success!');
+      enqueueSnackbar('Imóvel cadastrado com sucesso!');
       push('/');
     } catch (error) {
       console.error(error);
