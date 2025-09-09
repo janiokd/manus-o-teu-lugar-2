@@ -165,8 +165,8 @@ export default function AdvertisePage() {
         });
       };
 
-      // Processar imagens para upload
-      let imageUrls: string[] = [];
+      // Processar imagens para base64
+      let imageBase64Array: string[] = [];
       
       if (form.images && form.images.length > 0) {
         console.log(`Processando ${form.images.length} imagens...`);
@@ -177,44 +177,29 @@ export default function AdvertisePage() {
         if (fileImages.length > 0) {
           try {
             // Converter para base64
-            const base64Images = await Promise.all(
-              fileImages.map(async (file, index) => ({
-                data: await fileToBase64(file),
-                name: `property_${Date.now()}_${index}.${file.type.split('/')[1]}`,
-                type: file.type
-              }))
+            imageBase64Array = await Promise.all(
+              fileImages.map(file => fileToBase64(file))
             );
 
-            console.log('Enviando imagens para S3...');
+            console.log(`${imageBase64Array.length} imagens convertidas para base64`);
             
-            // Upload para S3 via endpoint simplificado
-            const response = await axios.post('/api/util/upload-images', {
-              images: base64Images
-            });
-
-            if (response.data.success) {
-              imageUrls = response.data.images;
-              console.log(`Upload concluído: ${imageUrls.length} imagens`);
-            } else {
-              throw new Error(response.data.message || 'Erro no upload');
-            }
-            
-          } catch (uploadError) {
-            console.error('Erro no upload de imagens:', uploadError);
-            enqueueSnackbar('Erro ao fazer upload das imagens. Tente novamente.', { variant: 'error' });
+          } catch (conversionError) {
+            console.error('Erro na conversão de imagens:', conversionError);
+            enqueueSnackbar('Erro ao processar imagens. Tente novamente.', { variant: 'error' });
             return;
           }
         }
       }
       
-      // Preparar dados do formulário com URLs reais das imagens
+      // Preparar dados do formulário com imagens em base64
       const processedForm = {
         ...form,
-        images: imageUrls, // URLs reais do S3
+        imageBase64Array: imageBase64Array, // Array de base64
+        images: [], // Limpar array original
         features: { ...values.features[values.type] }
       };
       
-      console.log('Dados processados:', processedForm);
+      console.log('Enviando dados para cadastro...');
       
       await dispatch(registerProduct(processedForm));
       reset();
