@@ -155,8 +155,8 @@ export default function AdvertisePage() {
     try {
       console.log('formData:', form);
       
-      // Processar imagens para upload
-      let uploadedImageUrls: string[] = [];
+      // Processar imagens para base64 (solução temporária)
+      let processedImages: string[] = [];
       
       if (form.images && form.images.length > 0) {
         console.log(`Processando ${form.images.length} imagens...`);
@@ -166,9 +166,9 @@ export default function AdvertisePage() {
         
         if (fileImages.length > 0) {
           try {
-            console.log('Fazendo upload das imagens...');
+            console.log('Convertendo imagens para base64...');
             
-            // Converter cada arquivo para base64 e fazer upload via API simples
+            // Converter cada arquivo para base64
             for (let i = 0; i < fileImages.length; i++) {
               const file = fileImages[i];
               
@@ -180,47 +180,28 @@ export default function AdvertisePage() {
                 reader.readAsDataURL(file);
               });
               
-              // Fazer upload via fetch para endpoint simples
-              const uploadResponse = await fetch('/api/util/upload-single-image', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  image: base64,
-                  fileName: `property_${Date.now()}_${i}.${file.type.split('/')[1]}`
-                })
-              });
-              
-              if (uploadResponse.ok) {
-                const result = await uploadResponse.json();
-                if (result.success && result.url) {
-                  uploadedImageUrls.push(result.url);
-                  console.log(`Imagem ${i + 1} enviada: ${result.url}`);
-                }
-              } else {
-                console.error(`Erro no upload da imagem ${i + 1}`);
-              }
+              processedImages.push(base64);
+              console.log(`Imagem ${i + 1} convertida para base64`);
             }
             
-            console.log(`Upload concluído: ${uploadedImageUrls.length} imagens`);
+            console.log(`Conversão concluída: ${processedImages.length} imagens`);
             
-          } catch (uploadError) {
-            console.error('Erro no upload:', uploadError);
-            enqueueSnackbar('Erro ao fazer upload das imagens. Tente novamente.', { variant: 'error' });
+          } catch (conversionError) {
+            console.error('Erro na conversão:', conversionError);
+            enqueueSnackbar('Erro ao processar imagens. Tente novamente.', { variant: 'error' });
             return;
           }
         }
       }
       
-      // Preparar dados do formulário com URLs das imagens
+      // Preparar dados do formulário com imagens em base64
       const processedForm = {
         ...form,
-        images: uploadedImageUrls, // URLs reais das imagens
+        images: processedImages, // Base64 das imagens (temporário)
         features: { ...values.features[values.type] }
       };
       
-      console.log('Salvando imóvel no banco:', processedForm);
+      console.log('Salvando imóvel no banco (com base64 temporário):', processedForm);
       
       await dispatch(registerProduct(processedForm));
       reset();
