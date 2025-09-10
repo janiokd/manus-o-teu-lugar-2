@@ -8,6 +8,7 @@ router.get("/getNeighborhoods", getNeighborhoods);
 router.get("/fetchCep", fetchCep);
 router.post('/upload-images', uploadImages);
 router.post('/upload-image', uploadImage);
+router.post('/upload-single-image', uploadSingleImage);
 
 module.exports = router;
 
@@ -60,32 +61,31 @@ async function uploadImages(req, res, next) {
     }
 }
 
-// Upload de imagem única (base64)
-async function uploadImage(req, res, next) {
+// Upload de imagem única (base64) - versão simples
+async function uploadSingleImage(req, res, next) {
     try {
-        const { image, name, type } = req.body;
+        const { image, fileName } = req.body;
         
-        if (!image) {
+        if (!image || !fileName) {
             return res.status(400).json({
                 success: false,
-                message: 'Nenhuma imagem foi enviada'
+                message: 'Imagem e nome do arquivo são obrigatórios'
             });
         }
 
-        console.log('Recebida imagem para upload:', name || 'unnamed');
+        console.log('Upload de imagem única:', fileName);
         
         // Upload para S3
-        const fileName = name || `image_${Date.now()}.jpg`;
-        const url = await uploadBase64ToS3(image, fileName, type);
+        const url = await uploadBase64ToS3(image, fileName);
         
         res.json({
             success: true,
             message: 'Imagem enviada com sucesso',
-            image: url
+            url: url
         });
         
     } catch (error) {
-        console.error('Erro no upload de imagem:', error);
+        console.error('Erro no upload de imagem única:', error);
         res.status(500).json({
             success: false,
             message: 'Erro interno no upload',

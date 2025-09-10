@@ -155,18 +155,8 @@ export default function AdvertisePage() {
     try {
       console.log('formData:', form);
       
-      // Função para converter File para base64
-      const fileToBase64 = (file: File): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      };
-
-      // Processar imagens para base64
-      let imageBase64Array: string[] = [];
+      // Processar imagens para upload
+      let uploadedImageUrls: string[] = [];
       
       if (form.images && form.images.length > 0) {
         console.log(`Processando ${form.images.length} imagens...`);
@@ -176,30 +166,61 @@ export default function AdvertisePage() {
         
         if (fileImages.length > 0) {
           try {
-            // Converter para base64
-            imageBase64Array = await Promise.all(
-              fileImages.map(file => fileToBase64(file))
-            );
-
-            console.log(`${imageBase64Array.length} imagens convertidas para base64`);
+            console.log('Fazendo upload das imagens...');
             
-          } catch (conversionError) {
-            console.error('Erro na conversão de imagens:', conversionError);
-            enqueueSnackbar('Erro ao processar imagens. Tente novamente.', { variant: 'error' });
+            // Converter cada arquivo para base64 e fazer upload via API simples
+            for (let i = 0; i < fileImages.length; i++) {
+              const file = fileImages[i];
+              
+              // Converter para base64
+              const base64 = await new Promise<string>((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result as string);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+              });
+              
+              // Fazer upload via fetch para endpoint simples
+              const uploadResponse = await fetch('/api/util/upload-single-image', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  image: base64,
+                  fileName: `property_${Date.now()}_${i}.${file.type.split('/')[1]}`
+                })
+              });
+              
+              if (uploadResponse.ok) {
+                const result = await uploadResponse.json();
+                if (result.success && result.url) {
+                  uploadedImageUrls.push(result.url);
+                  console.log(`Imagem ${i + 1} enviada: ${result.url}`);
+                }
+              } else {
+                console.error(`Erro no upload da imagem ${i + 1}`);
+              }
+            }
+            
+            console.log(`Upload concluído: ${uploadedImageUrls.length} imagens`);
+            
+          } catch (uploadError) {
+            console.error('Erro no upload:', uploadError);
+            enqueueSnackbar('Erro ao fazer upload das imagens. Tente novamente.', { variant: 'error' });
             return;
           }
         }
       }
       
-      // Preparar dados do formulário com imagens em base64
+      // Preparar dados do formulário com URLs das imagens
       const processedForm = {
         ...form,
-        imageBase64Array: imageBase64Array, // Array de base64
-        images: [], // Limpar array original
+        images: uploadedImageUrls, // URLs reais das imagens
         features: { ...values.features[values.type] }
       };
       
-      console.log('Enviando dados para cadastro...');
+      console.log('Salvando imóvel no banco:', processedForm);
       
       await dispatch(registerProduct(processedForm));
       reset();
