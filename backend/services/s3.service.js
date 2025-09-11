@@ -17,7 +17,7 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: process.env.S3_BUCKET_NAME || 'oteulugar1',
-    acl: 'public-read', // Tornar arquivos públicos
+    // acl: 'public-read', // Remover ACL - bucket não permite ACLs
     key: function (req, file, cb) {
       // Gerar nome único para o arquivo
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);

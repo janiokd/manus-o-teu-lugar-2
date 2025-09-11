@@ -6,10 +6,18 @@ const connectionOptions = {
   useUnifiedTopology: true,
   useFindAndModify: false,
 };
+
+// Handle MongoDB connection with error handling
 mongoose.connect(
   process.env.MONGODB_URI || config.MONGODB_URI,
   connectionOptions
-);
+).then(() => {
+  console.log('MongoDB connected successfully');
+}).catch((error) => {
+  console.log('MongoDB connection failed:', error.message);
+  console.log('Server will continue running without database connection');
+});
+
 mongoose.Promise = global.Promise;
 
 module.exports = {

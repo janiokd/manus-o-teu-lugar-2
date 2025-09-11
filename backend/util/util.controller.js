@@ -7,7 +7,6 @@ const { uploadBase64ToS3, uploadMultipleBase64ToS3 } = require('./s3-simple');
 router.get("/getNeighborhoods", getNeighborhoods);
 router.get("/fetchCep", fetchCep);
 router.post('/upload-images', uploadImages);
-router.post('/upload-image', uploadImage);
 router.post('/upload-single-image', uploadSingleImage);
 
 module.exports = router;
