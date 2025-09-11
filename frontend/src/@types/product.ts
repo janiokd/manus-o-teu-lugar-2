@@ -1,3 +1,5 @@
+import { CustomFile } from 'src/components/upload';
+
 // ----------------------------------------------------------------------
 
 export type IProductType = string | 'apart' | 'house' | 'room' | 'commercial' | 'farm' | 'sitesFarm' | 'plot' | 'land' | 'garagesParking' | 'billboard'
@@ -22,10 +24,12 @@ export type IProduct = {
   contactMethod: string;
   privacyPolicy: boolean;
   rentalDuration: number;
-  images?: string[] | File[] | (string | File)[];
-  image?: string | File;
-  docImage?: string | File;
-  docImages?: string[] | File[] | (string | File)[];
+  images?: string[] | File[] | CustomFile[] | (string | File | CustomFile)[];
+  image?: string | File | CustomFile | null;
+  docImage?: string | File | CustomFile | null;
+  docImages?: string[] | File[] | CustomFile[] | (string | File | CustomFile)[];
+  description?: string;
+  afterSubmit?: string;
 };
 
 // ----------------------------------------------------------------------
