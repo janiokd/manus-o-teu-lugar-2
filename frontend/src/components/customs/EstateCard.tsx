@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, Stack, Chip, IconButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useLocales } from 'src/locales';
 import { PATH_PAGE } from 'src/routes/paths';
+import { CustomFile } from 'src/components/upload';
 import img from 'src/assets/images/img.png';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 
@@ -63,7 +64,7 @@ export default function EstateCard({ height, product }: EstateCardProps) {
 
   const list = product.images && product.images.length > 0 
     ? product.images
-        .filter((imageUrl) => {
+        .filter((imageUrl: string | File | CustomFile) => {
           return imageUrl && 
                  typeof imageUrl === 'string' && 
                  imageUrl.trim() !== '' &&

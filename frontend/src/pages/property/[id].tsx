@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 // components
 import Iconify from 'src/components/iconify';
+import { CustomFile } from 'src/components/upload';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -145,7 +146,7 @@ export default function PropertyDetailPage() {
     }
 
     return property.images
-      .filter((imageUrl) => {
+      .filter((imageUrl: string | File | CustomFile) => {
         return imageUrl && 
                typeof imageUrl === 'string' && 
                imageUrl.trim() !== '' &&

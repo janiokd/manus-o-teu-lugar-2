@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Container, Typography, Box, Grid, Card, CardContent, Button, TextField, CircularProgress } from '@mui/material';
 import Iconify from 'src/components/iconify';
+import { CustomFile } from 'src/components/upload';
 import { useSettingsContext } from 'src/components/settings';
 
 // Carousel component
@@ -214,7 +215,7 @@ export default function ImovelDetalhes() {
   }
 
   // Processar imagens
-  const validImages = property.images?.filter((img) => 
+  const validImages = property.images?.filter((img: string | File | CustomFile) => 
     img && 
     typeof img === 'string' && 
     !img.startsWith('blob:') && 
