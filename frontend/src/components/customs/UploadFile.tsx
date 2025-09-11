@@ -4,19 +4,15 @@ import { Box, Stack, Button, IconButton, Typography, StackProps, SxProps } from 
 import { styled, alpha, Theme } from '@mui/material/styles';
 //
 import Iconify from 'src/components/iconify';
+import { CustomFile } from 'src/components/upload';
 //
 import RejectionFiles from 'src/components/upload/errors/RejectionFiles';
 import MultiFilePreview from 'src/components/upload/preview/MultiFilePreview';
 import SingleFilePreview from 'src/components/upload/preview/SingleFilePreview';
 import SquareArrowUpIcon from 'src/assets/icons/SquareArrowUpIcon';
-// @mui
 
 // ----------------------------------------------------------------------
-interface CustomFile extends File {
-  path?: string;
-  preview?: string;
-  lastModifiedDate?: Date;
-}
+
 interface UploadProps extends DropzoneOptions {
   title?: string;
   error?: boolean;
