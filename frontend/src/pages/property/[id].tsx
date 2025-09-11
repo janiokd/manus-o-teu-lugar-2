@@ -145,14 +145,14 @@ export default function PropertyDetailPage() {
       return [{ id: '1', image: estateImage.src, title: property?.title || 'Imóvel' }];
     }
 
-    return property.images
+    return (property.images
       .filter((imageUrl: string | File | CustomFile) => {
         return imageUrl && 
                typeof imageUrl === 'string' && 
                imageUrl.trim() !== '' &&
                !imageUrl.startsWith('blob:') &&
                (imageUrl.startsWith('http://') || imageUrl.startsWith('https://'));
-      }) as string[]
+      }) as string[])
       .map((imageUrl: string, index: number) => ({
         id: index.toString(),
         image: imageUrl,

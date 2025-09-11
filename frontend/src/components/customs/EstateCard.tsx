@@ -63,14 +63,14 @@ export default function EstateCard({ height, product }: EstateCardProps) {
   };
 
   const list = product.images && product.images.length > 0 
-    ? product.images
+    ? (product.images
         .filter((imageUrl: string | File | CustomFile) => {
           return imageUrl && 
                  typeof imageUrl === 'string' && 
                  imageUrl.trim() !== '' &&
                  !imageUrl.startsWith('blob:') &&
                  (imageUrl.startsWith('http://') || imageUrl.startsWith('https://'));
-        }) as string[]
+        }) as string[])
         .map((imageUrl: string, index: number) => ({
           id: index.toString(),
           name: product.title || 'Imóvel',
