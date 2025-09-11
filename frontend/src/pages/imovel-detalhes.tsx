@@ -214,12 +214,12 @@ export default function ImovelDetalhes() {
   }
 
   // Processar imagens
-  const validImages = property.images?.filter((img: string) => 
+  const validImages = property.images?.filter((img) => 
     img && 
     typeof img === 'string' && 
     !img.startsWith('blob:') && 
     (img.startsWith('http://') || img.startsWith('https://'))
-  ) || [];
+  ) as string[] || [];
 
   // Função para formatar preço
   const formatPrice = (price: any) => {

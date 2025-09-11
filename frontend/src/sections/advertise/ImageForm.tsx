@@ -51,7 +51,7 @@ export default function ImageForm() {
   );
 
   const handleRemoveMultiFile = (inputFile: File | string) => {
-    const filtered = values.images && values.images?.filter((file: string | File) => file !== inputFile);
+    const filtered = values.images && values.images?.filter((file) => file !== inputFile);
     setValue('images', filtered);
   };
 
