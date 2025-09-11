@@ -22,7 +22,10 @@ export type IProduct = {
   contactMethod: string;
   privacyPolicy: boolean;
   rentalDuration: number;
-  images?: string[];
+  images?: string[] | File[] | (string | File)[];
+  image?: string | File;
+  docImage?: string | File;
+  docImages?: string[] | File[] | (string | File)[];
 };
 
 // ----------------------------------------------------------------------

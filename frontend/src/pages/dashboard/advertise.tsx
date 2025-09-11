@@ -155,8 +155,8 @@ export default function AdvertisePage() {
     try {
       console.log('formData:', form);
       
-      // Preparar dados do formulário
-      const processedForm = {
+      // Preparar dados do formulário - o Redux vai processar os Files e converter para URLs
+      const processedForm: IProduct = {
         ...form,
         features: { ...values.features[values.type] }
       };
