@@ -2,6 +2,12 @@
 const Property = db.Property;
 const mongoose = require("mongoose");
 const { geocodeAddress, getDefaultCoordinatesBH } = require("../services/geocoding.service");
+const fallbackStorage = require("../services/fallback-storage.service");
+
+// Check if MongoDB is connected
+function isMongoConnected() {
+  return mongoose.connection.readyState === 1;
+}
 
 module.exports = {
   getAll,
@@ -15,8 +21,30 @@ module.exports = {
 };
 
 async function getAll() {
-  const properties = await Property.find();
-  return properties.map(property => normalizeProperty(property));
+  let properties = [];
+  
+  // Get from MongoDB if connected
+  if (isMongoConnected()) {
+    try {
+      const mongoProperties = await Property.find();
+      properties = mongoProperties.map(property => normalizeProperty(property));
+      console.log(`✅ Retrieved ${properties.length} properties from MongoDB`);
+    } catch (error) {
+      console.error('❌ Error retrieving from MongoDB:', error.message);
+    }
+  }
+  
+  // Also get from fallback storage
+  try {
+    const fallbackProperties = fallbackStorage.getAllProperties();
+    properties = [...properties, ...fallbackProperties.map(property => normalizeProperty(property))];
+    console.log(`✅ Retrieved ${fallbackProperties.length} properties from fallback storage`);
+  } catch (error) {
+    console.error('❌ Error retrieving from fallback storage:', error.message);
+  }
+  
+  console.log(`📊 Total properties retrieved: ${properties.length}`);
+  return properties;
 }
 
 // Função para normalizar dados dos imóveis
@@ -155,6 +183,8 @@ async function getById(id) {
 }
 
 async function create(propertyParam) {
+  console.log('Creating property. MongoDB connected:', isMongoConnected());
+  
   // Geocodificar endereço se fornecido
   if (propertyParam.address) {
     const geocodeResult = await geocodeAddress(propertyParam.address);
@@ -172,16 +202,22 @@ async function create(propertyParam) {
     }
   }
 
-  const property = new Property({ ...propertyParam });
+  // Use fallback storage if MongoDB is not connected
+  if (!isMongoConnected()) {
+    console.log('⚠️ MongoDB not connected, using fallback storage');
+    return fallbackStorage.saveProperty(propertyParam);
+  }
 
-  // var property = new Event(propertyParam);
-
-  // Object.keys(property).forEach((k) => {
-  //   property.markModified(k);
-  // });
-
-  // save property
-  return await property.save();
+  // Use MongoDB if connected
+  try {
+    const property = new Property({ ...propertyParam });
+    const savedProperty = await property.save();
+    console.log('✅ Property saved to MongoDB');
+    return savedProperty;
+  } catch (error) {
+    console.error('❌ MongoDB save failed, falling back to file storage:', error.message);
+    return fallbackStorage.saveProperty(propertyParam);
+  }
 }
 
 async function update(id, propertyParam) {
