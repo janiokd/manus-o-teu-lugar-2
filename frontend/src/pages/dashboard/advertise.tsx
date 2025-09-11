@@ -46,7 +46,7 @@ AdvertisePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}<
 
 // ----------------------------------------------------------------------
 
-interface FormValuesProps extends Omit<IProduct, 'images'> {
+interface FormValuesProps {
   type: IProductType;
   city: object | null;
   state: object | null;
