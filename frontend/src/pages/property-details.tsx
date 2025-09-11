@@ -146,13 +146,13 @@ export default function PropertyDetailPage() {
     }
 
     const validImages = property.images
-      .filter((imageUrl: string) => {
+      .filter((imageUrl) => {
         return imageUrl && 
                typeof imageUrl === 'string' && 
                imageUrl.trim() !== '' &&
                !imageUrl.startsWith('blob:') &&
                (imageUrl.startsWith('http://') || imageUrl.startsWith('https://'));
-      });
+      }) as string[];
 
     if (validImages.length === 0) {
       return [{ id: '1', image: estateImage.src, title: property?.title || 'Imóvel' }];

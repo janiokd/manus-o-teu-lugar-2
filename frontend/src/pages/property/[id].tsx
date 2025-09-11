@@ -145,13 +145,13 @@ export default function PropertyDetailPage() {
     }
 
     return property.images
-      .filter((imageUrl: string) => {
+      .filter((imageUrl) => {
         return imageUrl && 
                typeof imageUrl === 'string' && 
                imageUrl.trim() !== '' &&
                !imageUrl.startsWith('blob:') &&
                (imageUrl.startsWith('http://') || imageUrl.startsWith('https://'));
-      })
+      }) as string[]
       .map((imageUrl: string, index: number) => ({
         id: index.toString(),
         image: imageUrl,
