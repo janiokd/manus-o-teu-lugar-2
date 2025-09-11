@@ -68,9 +68,7 @@ export default function EstateCard({ height, product }: EstateCardProps) {
                  typeof imageUrl === 'string' && 
                  imageUrl.trim() !== '' &&
                  !imageUrl.startsWith('blob:') &&
-                 (imageUrl.startsWith('http://') || 
-                  imageUrl.startsWith('https://') || 
-                  imageUrl.startsWith('data:image/'));
+                 (imageUrl.startsWith('http://') || imageUrl.startsWith('https://'));
         })
         .map((imageUrl: string, index: number) => ({
           id: index.toString(),

@@ -155,53 +155,13 @@ export default function AdvertisePage() {
     try {
       console.log('formData:', form);
       
-      // Processar imagens para base64 (solução temporária)
-      let processedImages: string[] = [];
-      
-      if (form.images && form.images.length > 0) {
-        console.log(`Processando ${form.images.length} imagens...`);
-        
-        // Filtrar apenas arquivos File (não strings/URLs)
-        const fileImages = form.images.filter(img => img instanceof File) as File[];
-        
-        if (fileImages.length > 0) {
-          try {
-            console.log('Convertendo imagens para base64...');
-            
-            // Converter cada arquivo para base64
-            for (let i = 0; i < fileImages.length; i++) {
-              const file = fileImages[i];
-              
-              // Converter para base64
-              const base64 = await new Promise<string>((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result as string);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-              });
-              
-              processedImages.push(base64);
-              console.log(`Imagem ${i + 1} convertida para base64`);
-            }
-            
-            console.log(`Conversão concluída: ${processedImages.length} imagens`);
-            
-          } catch (conversionError) {
-            console.error('Erro na conversão:', conversionError);
-            enqueueSnackbar('Erro ao processar imagens. Tente novamente.', { variant: 'error' });
-            return;
-          }
-        }
-      }
-      
-      // Preparar dados do formulário com imagens em base64
+      // Preparar dados do formulário
       const processedForm = {
         ...form,
-        images: processedImages, // Base64 das imagens (temporário)
         features: { ...values.features[values.type] }
       };
       
-      console.log('Salvando imóvel no banco (com base64 temporário):', processedForm);
+      console.log('Salvando imóvel no banco:', processedForm);
       
       await dispatch(registerProduct(processedForm));
       reset();
